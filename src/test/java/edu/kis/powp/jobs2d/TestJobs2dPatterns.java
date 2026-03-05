@@ -10,17 +10,19 @@ import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.drivers.adapter.ConfigurableLineWrapper;
+import edu.kis.powp.jobs2d.drivers.adapter.CurrentDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.DrawPanelAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDrawerAdapter;
 import edu.kis.powp.jobs2d.events.SelectChangeVisibleOptionListener;
 import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
+import edu.kis.powp.jobs2d.magicpresets.FiguresJane;
 import edu.kis.powp.jobs2d.magicpresets.FiguresJoe;
 
 public class TestJobs2dPatterns {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
+	private static AbstractDriver currentDriverAdapter;
 	/**
 	 * Setup test concerning preset figures in context.
 	 * 
@@ -34,6 +36,10 @@ public class TestJobs2dPatterns {
 
 		application.addTest("Figure Joe 2", (ActionEvent e) ->
 				FiguresJoe.figureScript2(DriverFeature.getDriverManager().getCurrentDriver()));
+
+		application.addTest("Figure Jane (via adapter)", (ActionEvent e) -> {
+			FiguresJane.figureScript(currentDriverAdapter);
+		});
 	}
 
 	/**
@@ -61,6 +67,8 @@ public class TestJobs2dPatterns {
 						.withColor(Color.RED)
 		);
 		DriverFeature.addDriver("Configured Dotted Line Driver", dottedLineDriver2);
+
+		currentDriverAdapter = new CurrentDriverAdapter();
 
 		DriverFeature.updateDriverInfo();
 	}
