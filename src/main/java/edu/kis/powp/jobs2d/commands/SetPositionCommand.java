@@ -21,14 +21,6 @@ public class SetPositionCommand implements DriverCommand {
         driver.setPosition(x, y);
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     @Override
     public String toString() {
         return "SetPositionCommand{" + "x=" + x + ", y=" + y + '}';
